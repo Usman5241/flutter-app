@@ -1,0 +1,38 @@
+version: 1
+frontend:
+  phases:
+    # Build, test, and release phases of your app
+    build:
+      commands:
+        - cd bismillah  # Change directory to your Flutter project directory
+        - flutter pub get  # Install dependencies
+        - flutter clean  # Clean any existing build artifacts
+        - flutter build web --release  # Build Flutter web app for release
+
+  artifacts:
+    # Files and directories to be included in the build output
+    baseDirectory: bismillah/build/web
+    files:
+      - '**/*'
+
+  cache:
+    paths:
+      - .pub-cache
+
+# Add backend configuration if you have backend resources
+
+# Add hosting configuration for AWS Amplify
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Executing preBuild commands"
+
+  artifacts:
+    baseDirectory: /build
+    files:
+      - /**
+
+  cache:
+    paths:
+      - /root/.pub-cache
