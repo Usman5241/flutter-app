@@ -1,8 +1,12 @@
 version: 1
 frontend:
   phases:
-    build:
+    preBuild:
       commands:
+        - echo Installing Flutter SDK
+        - git clone https://github.com/flutter/flutter.git -b stable
+        - export PATH="$PATH:`pwd`/flutter/bin"
+        - flutter --version  # Verify Flutter installation
         - cd $CODEBUILD_SRC_DIR/flutter-app  # Change directory to your Flutter project directory
         - flutter pub get  # Install dependencies
         - flutter clean  # Clean any existing build artifacts
