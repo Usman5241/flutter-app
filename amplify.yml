@@ -1,4 +1,4 @@
-version: 1
+version: 1.0
 frontend:
   phases:
     preBuild:
@@ -6,36 +6,16 @@ frontend:
         - echo Installing Flutter SDK
         - git clone https://github.com/flutter/flutter.git -b stable
         - export PATH="$PATH:`pwd`/flutter/bin"
-        - flutter --version  # Verify Flutter installation
-        - cd $CODEBUILD_SRC_DIR/flutter-app  # Change directory to your Flutter project directory
-        - flutter pub get  # Install dependencies
-        - flutter clean  # Clean any existing build artifacts
-        - flutter build web --release  # Build Flutter web app for release
-
+        - flutter --version
+    build:
+      commands:
+        - flutter pub get
+        - flutter build web --release
+        - if [ -d "flutter-app/build/web" ]; then echo "Build directory exists"; else echo "Build directory does not exist"; fi
   artifacts:
-    baseDirectory: flutter-app/build/web
+    baseDirectory: "flutter-app/build/web"
     files:
       - '**/*'
-
   cache:
     paths:
-      - $HOME/.pub-cache
-      - flutter-app/.dart_tool/build
-
-# Optionally, you can add backend configuration here if needed
-
-# Optionally, add hosting configuration for AWS Amplify
-backend:
-  phases:
-    preBuild:
-      commands:
-        - echo "Executing preBuild commands"
-
-  artifacts:
-    baseDirectory: /build
-    files:
-      - /**
-      
-  cache:
-    paths:
-      - /root/.pub-cache
+      - node_modules/**/* 
