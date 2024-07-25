@@ -11,11 +11,11 @@ frontend:
       commands:
         - flutter pub get
         - flutter build web --release
-        - if [ -d "flutter-app/build/web" ]; then echo "Build directory exists"; else echo "Build directory does not exist"; fi
+        - if [ -d "build/web" ]; then echo "Build directory exists"; else echo "Build directory does not exist"; fi
   artifacts:
-    baseDirectory: "flutter-app/build/web"
+    baseDirectory: "build/web"
     files:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/* 
+      - node_modules/**/*
